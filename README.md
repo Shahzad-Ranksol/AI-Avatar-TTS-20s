@@ -39,9 +39,16 @@ print("Python:", platform.python_version())
 # Core python deps
 !pip -q install --upgrade pip
 !pip -q install TTS==0.22.0  # Coqui TTS with XTTS v2
-!pip -q install moviepy==1.0.3 librosa==0.10.1 soundfile==0.12.1 numpy==1.26.4
+# Pin numpy/numba to compatible releases so librosa installs cleanly
+!pip -q install moviepy==1.0.3 librosa==0.10.1 soundfile==0.12.1 numpy==1.23.5 numba==0.57.1
 !pip -q install opencv-python-headless==4.8.0.74
 !pip -q install tqdm==4.66.5
+
+# Confirm the pinned versions (librosa depends on numba, which constrains numpy)
+import numpy, numba, librosa
+print("numpy:", numpy.__version__)
+print("numba:", numba.__version__)
+print("librosa:", librosa.__version__)
 
 # SadTalker (talking head)
 !git clone -q https://github.com/OpenTalker/SadTalker.git
